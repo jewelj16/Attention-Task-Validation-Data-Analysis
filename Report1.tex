@@ -25,16 +25,16 @@ Team: Chennai Super Kings \\
 \subsection{Domain Background}
 
 Selective attention is the cognitive ability to focus on relevant stimuli
-while filtering out distractors.
+while filtering out distractors \citep{treisman1980feature}.
 It is fundamental to everyday functioning and is impaired in conditions
 such as ADHD and following traumatic brain injury.
 
 The standard laboratory method for measuring selective attention is the
 \emph{visual search task}: a participant views a display of objects and
-must find a target as quickly and accurately as possible \citep{wolfe1994guided}.
+must find a target as quickly and accurately as possible.
 Feature Integration Theory predicts that increasing the number of targets
 increases attentional load, producing slower reaction times and lower
-accuracy.
+accuracy \citep{treisman1980feature}.
 
 Laboratory-based assessment, while valid, has practical limitations.
 It requires specialised hardware, trained staff, and in-person attendance.
@@ -42,6 +42,7 @@ Gamified mobile assessments have been proposed as a scalable alternative,
 but must be validated against established lab measures before they can
 be trusted \citep{lumsden2016gamification}.
 
+Code is available on \href{https://github.com/jewelj16/Attention-Task-Validation-Data-Analysis}{GitHub}.
 \subsection{Study Objectives}
 
 This study aims to validate a Gamified Selective Attention Task by comparing performance outcomes against a standard laboratory measure. A 2 $\times$ 2 mixed factorial design was employed, with Target Load (Single vs. Multiple) as a between-subjects variable and Modality (Lab vs. Game) as a within-subjects variable.
@@ -83,7 +84,7 @@ The research addresses the following aims:
 \subsubsection*{H5 --- Target Colour Effect}
 \begin{itemize}
   \item[$H_0$:] Target colour has no effect on RT or accuracy ($\mu_{\text{red}} = \mu_{\text{other}}$).
-  \item[$H_1$:] Red targets result in faster RTs and higher accuracy compared to other colours, consistent with Feature Integration Theory ($\mu_{\text{red}} < \mu_{\text{other}}$ for RT; $\mu_{\text{red}} > \mu_{\text{other}}$ for accuracy, one-tailed).
+  \item[$H_1$:] Red targets result in faster RTs and higher accuracy compared to other colours, consistent with Feature Integration Theory \citep{treisman1980feature} ($\mu_{\text{red}} < \mu_{\text{other}}$ for RT; $\mu_{\text{red}} > \mu_{\text{other}}$ for accuracy, one-tailed).
 \end{itemize}
 
 \subsection{Participants}
@@ -170,6 +171,7 @@ Accuracy = \frac{SuccessRate(\%)}{100}
 \item Clip accuracy to the range $[0,1]$.
 \end{enumerate}
 
+
 \section{Results}
 \subsection{Descriptive Statistics}
 
@@ -224,7 +226,6 @@ Single   & Game & 21 & 3.104 & 0.625 & 2.923 & 2.258 & 4.683 & 0.983 & 0.028 & 1
 \end{figure}
 
 \section{Future Work}
-
 Future work will include:
 
 \begin{itemize}
@@ -233,20 +234,35 @@ Future work will include:
 \item Reliability analysis of both instruments
 \end{itemize}
 
+\section{Member Contributions}
+
+The successful completion of this project was a collaborative effort. The specific contributions of each team member are outlined below:
+
+\begin{itemize}
+\item \textbf{Jewel Joseph (2025201047):} Data Summary, Visualizations, and Report drafting
+\item \textbf{Gokul C (2025201042):} Visualizations and Exploratory Analysis
+\item \textbf{Giridharan P (2025201030):} Visualizations, Literature Research, and Report assistance
+\end{itemize}
+
 \bibliographystyle{apalike}
 
 \begin{thebibliography}{2}
 
 \bibitem{lumsden2016gamification}
 Lumsden et al. (2016).
-Gamification of cognitive assessment and training.
+Gamification of cognitive assessment and training: A systematic review of applications and efficacy.
 \textit{JMIR Serious Games}.
 
-\bibitem{wolfe1994guided}
-Wolfe (1994).
-Guided search 2.0.
-\textit{Psychonomic Bulletin \& Review}.
+\bibitem{treisman1980feature}
+Anne M. Treisman, Garry Gelade (1980).
+A feature-integration theory of attention.
+\textit{Cognitive Psychology}, Volume 12, Issue 1.
+
+
 
 \end{thebibliography}
 
 \end{document}
+
+
+
