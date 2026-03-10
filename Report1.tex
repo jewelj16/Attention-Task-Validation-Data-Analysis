@@ -5,7 +5,7 @@
 \usepackage{booktabs}
 \usepackage[hidelinks]{hyperref}
 \usepackage[numbers]{natbib}
-
+\usepackage{float}
 \title{Report 1: Attention Task Validation}
 
 \author{
@@ -171,7 +171,6 @@ Accuracy = \frac{SuccessRate(\%)}{100}
 \end{enumerate}
 
 \section{Results}
-
 \subsection{Descriptive Statistics}
 
 \begin{table}[h]
@@ -183,28 +182,45 @@ Accuracy = \frac{SuccessRate(\%)}{100}
 \cmidrule(lr){4-8}\cmidrule(lr){9-11}
 Target Load & Modality & $N$ & $M$ & $SD$ & $Med$ & $Min$ & $Max$ & $M$ & $SD$ & $Med$ \\
 \midrule
-Multiple & Game & [FILL] & [FILL] & [FILL] & [FILL] & [FILL] & [FILL] & [FILL] & [FILL] & [FILL] \\
-         & Lab  & [FILL] & [FILL] & [FILL] & [FILL] & [FILL] & [FILL] & [FILL] & [FILL] & [FILL] \\
-Single   & Game & [FILL] & [FILL] & [FILL] & [FILL] & [FILL] & [FILL] & [FILL] & [FILL] & [FILL] \\
-         & Lab  & [FILL] & [FILL] & [FILL] & [FILL] & [FILL] & [FILL] & [FILL] & [FILL] & [FILL] \\
+Multiple & Game & 16 & 1.856 & 0.507 & 1.719 & 1.136 & 3.120 & 0.964 & 0.025 & 0.963 \\
+         & Lab  & 16 & 1.505 & 0.268 & 1.428 & 1.186 & 2.023 & 0.951 & 0.135 & 0.993 \\
+Single   & Game & 21 & 3.104 & 0.625 & 2.923 & 2.258 & 4.683 & 0.983 & 0.028 & 1.000 \\
+         & Lab  & 21 & 1.495 & 0.225 & 1.471 & 1.093 & 2.223 & 1.000 & 0.000 & 1.000 \\
 \bottomrule
 \end{tabular}
 }
 \caption{Descriptive statistics}
 \end{table}
-
 \subsection{Figures}
 
-\begin{figure}[h]
+\begin{figure}[H]
 \centering
-\fbox{\parbox{0.8\linewidth}{\centering Insert RT distribution figure}}
-\caption{Reaction time distributions}
+\includegraphics[width=0.7\linewidth]{rt_dist.png}
+\caption{Reaction Time Distribution}
 \end{figure}
 
-\begin{figure}[h]
+\begin{figure}[H]
 \centering
-\fbox{\parbox{0.8\linewidth}{\centering Insert accuracy distribution figure}}
-\caption{Accuracy distributions}
+\includegraphics[width=0.7\linewidth]{acc_dist.png}
+\caption{Accuracy Distribution}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\linewidth]{groups_dist.png}
+\caption{Group Distribution}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\linewidth]{lab_vs_game.png}
+\caption{Lab vs Game Performance}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\linewidth]{image.png}
+\caption{Effect of Target Colour}
 \end{figure}
 
 \section{Future Work}
