@@ -1,0 +1,262 @@
+\documentclass[12pt]{article}
+
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage[hidelinks]{hyperref}
+\usepackage[numbers]{natbib}
+
+\title{Report 1: Preliminary Analysis\\
+Descriptive Statistics and Visualizations\\[1em]
+\large Attention Task Validation}
+
+\author{
+Course: Behavioral Research: Statistical Methods \\
+Team: Chennai Super Kings \\
+Members: \\
+Jewel Joseph (Roll No: 2025201047) \\
+Giridharan P (Roll No: 2025201030) \\
+Gokul C (Roll No: 2025201042)
+}
+
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+\newpage
+
+\section{Introduction}
+
+\subsection{Domain Background}
+
+Selective attention is the cognitive ability to focus on relevant stimuli
+while filtering out distractors.
+It is fundamental to everyday functioning and is impaired in conditions
+such as ADHD and following traumatic brain injury.
+
+The standard laboratory method for measuring selective attention is the
+\emph{visual search task}: a participant views a display of objects and
+must find a target as quickly and accurately as possible \citep{wolfe1994guided}.
+Feature Integration Theory predicts that increasing the number of targets
+increases attentional load, producing slower reaction times and lower
+accuracy.
+
+Laboratory-based assessment, while valid, has practical limitations.
+It requires specialised hardware, trained staff, and in-person attendance.
+Gamified mobile assessments have been proposed as a scalable alternative,
+but must be validated against established lab measures before they can
+be trusted \citep{lumsden2016gamification}.
+
+\subsection{Study Objectives}
+
+This study aims to validate a Gamified Selective Attention Task by comparing performance outcomes against a standard laboratory measure. A 2 $\times$ 2 mixed factorial design was employed, with Target Load (Single vs. Multiple) as a between-subjects variable and Modality (Lab vs. Game) as a within-subjects variable.
+
+The research addresses the following aims:
+\begin{enumerate}
+\item \textbf{RQ1 --- Concurrent Validity:} Is there a positive correlation between performance on the game and the lab task?
+\item \textbf{RQ2 --- Load Effect:} Does the Multiple Target condition produce poorer performance than the Single Target condition?
+\item \textbf{RQ3 --- Modality Effect:} Does the game interface systematically affect performance compared to the lab interface?
+\item \textbf{RQ4 --- Level Effect:} Does performance change across progressive game levels?
+\end{enumerate}
+
+\subsection{Research Hypotheses}
+
+\subsubsection*{H1 --- Concurrent Validity}
+\begin{itemize}
+  \item[$H_0$:] There is no correlation between performance on the Game and Lab task ($r = 0$).
+  \item[$H_1$:] Performance on the Game task is positively correlated with performance on the Lab task ($r > 0$, one-tailed).
+\end{itemize}
+
+\subsubsection*{H2 --- Load Effect}
+\begin{itemize}
+  \item[$H_0$:] RT and accuracy do not differ between the Single Target and Multiple Target conditions ($\mu_{\text{single}} = \mu_{\text{multiple}}$).
+  \item[$H_1$:] The Multiple Target condition results in slower RTs and lower accuracies compared to the Single Target condition, reflecting increased attentional load ($\mu_{\text{multiple}} > \mu_{\text{single}}$ for RT; $\mu_{\text{multiple}} < \mu_{\text{single}}$ for accuracy, one-tailed).
+\end{itemize}
+
+\subsubsection*{H3 --- Modality Effect}
+\begin{itemize}
+  \item[$H_0$:] There is no systematic difference in performance between the Lab and Game interfaces ($\mu_{\text{lab}} = \mu_{\text{game}}$).
+  \item[$H_1$:] Performance differs systematically between the Lab and Game interfaces ($\mu_{\text{lab}} \neq \mu_{\text{game}}$, two-tailed).
+\end{itemize}
+
+\subsubsection*{H4 --- Level Effect}
+\begin{itemize}
+  \item[$H_0$:] Performance is stable across game levels, with no linear relationship between level and RT ($r = 0$).
+  \item[$H_1$:] RT changes systematically across game levels ($r \neq 0$, two-tailed).
+\end{itemize}
+
+\subsubsection*{H5 --- Target Colour Effect}
+\begin{itemize}
+  \item[$H_0$:] Target colour has no effect on RT or accuracy ($\mu_{\text{red}} = \mu_{\text{other}}$).
+  \item[$H_1$:] Red targets result in faster RTs and higher accuracy compared to other colours, consistent with Feature Integration Theory ($\mu_{\text{red}} < \mu_{\text{other}}$ for RT; $\mu_{\text{red}} > \mu_{\text{other}}$ for accuracy, one-tailed).
+\end{itemize}
+
+\subsection{Participants}
+
+$N = 37$ participants were randomly assigned to one of two Target Load groups.
+To control for practice and fatigue effects, the order of modalities (Lab first or Game first) was counterbalanced within each group.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{lccc}
+\toprule
+Group & Condition & $n$ & IDs \\
+\midrule
+Group A & Single Target & 21 & 1--21 \\
+Group B & Multiple Target & 16 & 22--37 \\
+\bottomrule
+\end{tabular}
+\caption{Participant allocation}
+\end{table}
+
+\section{Methods}
+
+\subsection{Experimental Design and Data Granularity}
+One of the main differences between the two methods is how detailed the recorded data is. In the Computer Lab task, performance is recorded \textit{per trial} (we get the speed and accuracy of every single click). In the Mobile Game, performance is only recorded as an overall summary score \textit{per level} (a single speed and accuracy score for the entire level combined).
+
+Because of this difference, before running any statistical tests, we had to average all the lab trials and game levels together so that every single participant ended up with just one overall speed and accuracy score for each condition.
+
+\subsection{Independent and Dependent Variables}
+
+The experiment used a 2 $\times$ 2 Mixed Factorial Design with the following variables:
+
+\textbf{1. Independent Variables (IVs)}
+\begin{itemize}
+  \item \textbf{Target Load:} (Between-Subjects) Participants were assigned to either \textit{Single Target} (one object to find) or \textit{Multiple Target} (several objects to find at once).
+  \item \textbf{Modality:} (Within-Subjects) Every participant played the \textit{Game} on a smartphone and did the \textit{Lab} task on a computer.
+\end{itemize}
+
+\textbf{2. Dependent Variables (DVs)}
+\begin{itemize}
+  \item \textbf{Reaction Time (RT):} The time in seconds it takes from when the target appears to when the participant first clicks or taps it.
+  \item \textbf{Accuracy:} The proportion (0 to 1) of correct clicks or taps out of everything the participant did.
+\end{itemize}
+
+\subsection{Relevant Data Columns}
+The analysis uses a single dataset combining computer data and smartphone data. The critical columns evaluated include:
+\begin{itemize}
+  \item \textbf{\texttt{participant}:} An integer identifier (1--37) consistent across all modalities ensuring proper within-subjects matching.
+  \item \textbf{\texttt{target\_load}:} Derived from the experimental condition assigned to the participant (Single or Multiple targets).
+  \item \textbf{\texttt{modality}:} The source of the data (Lab or Game).
+  \item \textbf{\texttt{trial\_num}:} Extracted from \texttt{trials.thisN} (Lab) or \texttt{Level} (Game), representing the zero-indexed trial counter or sequential game level, respectively.
+  \item \textbf{\texttt{RT}:} The primary timing measure in seconds. For lab data, this represents latency from true stimulus onset to first response (\texttt{mouse.time[0]}). For game data, it is derived from \texttt{InitialResponseTime(ms)} / 1000.
+  \item \textbf{\texttt{accuracy}:} The primary correctness measure as a proportion (0--1). In the lab, it takes the value of 1 if the target object appears in the first entry of \texttt{mouse.clicked\_name}. In the game, it is derived from \texttt{SuccessRate(\%)} / 100.
+  \item \textbf{\texttt{target\_col}} (Lab Data Only):\textbf{} The specified colour of the target object required to test target saliency effects (H5).
+\end{itemize}
+
+\subsection{Reaction Time}
+
+Reaction time (RT) was computed as:
+
+\[
+RT = mouse.time[0] - (square.started - trial.started)
+\]
+
+For game files:
+
+\[
+RT = \frac{InitialResponseTime(ms)}{1000}
+\]
+
+\subsection{Accuracy}
+
+\begin{itemize}
+\item \textbf{Single target:} Correct if \texttt{target} appears in \texttt{mouse.clicked\_name}.
+\item \textbf{Multiple targets:} Correct objects are \texttt{target\_0} to \texttt{target\_4}.
+Accuracy = correct selections divided by 5.
+\end{itemize}
+
+For game files:
+
+\[
+Accuracy = \frac{SuccessRate(\%)}{100}
+\]
+
+\subsection{Data Cleaning}
+
+\begin{enumerate}
+\item Remove non-trial rows where \texttt{trials.thisN} is missing.
+\item Exclude RT $<0.1$ s or $>30$ s.
+\item Clip accuracy to the range $[0,1]$.
+\end{enumerate}
+
+\section{Results}
+
+\subsection{Descriptive Statistics}
+
+\begin{table}[h]
+\centering
+\resizebox{\textwidth}{!}{
+\begin{tabular}{llccccccccc}
+\toprule
+ & & & \multicolumn{5}{c}{RT (s)} & \multicolumn{3}{c}{Accuracy} \\
+\cmidrule(lr){4-8}\cmidrule(lr){9-11}
+Target Load & Modality & $N$ & $M$ & $SD$ & $Med$ & $Min$ & $Max$ & $M$ & $SD$ & $Med$ \\
+\midrule
+Multiple & Game & [FILL] & [FILL] & [FILL] & [FILL] & [FILL] & [FILL] & [FILL] & [FILL] & [FILL] \\
+         & Lab  & [FILL] & [FILL] & [FILL] & [FILL] & [FILL] & [FILL] & [FILL] & [FILL] & [FILL] \\
+Single   & Game & [FILL] & [FILL] & [FILL] & [FILL] & [FILL] & [FILL] & [FILL] & [FILL] & [FILL] \\
+         & Lab  & [FILL] & [FILL] & [FILL] & [FILL] & [FILL] & [FILL] & [FILL] & [FILL] & [FILL] \\
+\bottomrule
+\end{tabular}
+}
+\caption{Descriptive statistics}
+\end{table}
+
+\subsection{Figures}
+
+\begin{figure}[h]
+\centering
+\fbox{\parbox{0.8\linewidth}{\centering Insert RT distribution figure}}
+\caption{Reaction time distributions}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\fbox{\parbox{0.8\linewidth}{\centering Insert accuracy distribution figure}}
+\caption{Accuracy distributions}
+\end{figure}
+
+\section{Conclusion}
+
+\subsection{Summary}
+
+[FILL: Summary of results for RQ1--RQ4.]
+
+\subsection{Limitations}
+
+\begin{itemize}
+\item Small sample size in the Multiple Target group.
+\item Game data is aggregated by level rather than trial.
+\item Game sessions occurred outside a controlled lab environment.
+\end{itemize}
+
+\subsection{Future Work}
+
+Future work will include:
+
+\begin{itemize}
+\item A full $2 \times 2$ mixed ANOVA
+\item Non-parametric analyses where assumptions are violated
+\item Reliability analysis of both instruments
+\end{itemize}
+
+\bibliographystyle{apalike}
+
+\begin{thebibliography}{2}
+
+\bibitem{lumsden2016gamification}
+Lumsden et al. (2016).
+Gamification of cognitive assessment and training.
+\textit{JMIR Serious Games}.
+
+\bibitem{wolfe1994guided}
+Wolfe (1994).
+Guided search 2.0.
+\textit{Psychonomic Bulletin \& Review}.
+
+\end{thebibliography}
+
+\end{document}
