@@ -3,22 +3,25 @@
 
 \usepackage{amsmath}
 \usepackage{graphicx}
+\usepackage{grffile}      % handles spaces and parens in filenames
 \usepackage{booktabs}
 \usepackage[hidelinks]{hyperref}
+\usepackage[numbers]{natbib}
 \usepackage{float}
 \usepackage{geometry}
 \usepackage{array}
 \usepackage{caption}
+\usepackage{xcolor}
 
 \geometry{margin=1in}
 
-\title{Report 2: Attention Task Validation --- Phase 2 Analysis}
+\title{Report 2: Attention Task Validation}
 
 \author{
 Team: Chennai Super Kings \\
 }
 
-\date{\today}
+\date{GitHub: \href{https://github.com/jewelj16/Attention-Task-Validation-Data-Analysis}{\color{blue}\underline{Link}}}
 
 \begin{document}
 
@@ -32,57 +35,42 @@ Team: Chennai Super Kings \\
 
 \subsection{Background and Motivation}
 
-Selective attention --- the ability to focus on task-relevant stimuli while
-suppressing distractors --- is a core cognitive function that underpins
-performance in everyday life and clinical populations alike
-\citep{treisman1980feature}.
-Laboratory visual-search paradigms provide a well-validated, sensitive
-measurement of selective attention, but they demand specialised hardware,
-trained administrators, and in-person participation.
-Gamified, smartphone-delivered assessments have been proposed as a scalable
-alternative \citep{lumsden2016gamification}, yet they must first be validated
-against the lab gold standard before clinical or research adoption.
+Selective attention is a core cognitive function \citep{treisman1980feature}.
+Laboratory visual-search paradigms are the gold standard for measuring it,
+but gamified mobile assessments offer a scalable alternative
+\citep{lumsden2016gamification} that requires validation.
 
-This project addresses that validation question.
-Phase~1 (Report~1) described the experimental design, data pipeline, and
-descriptive results for a $2 \times 2$ mixed factorial study in which
-participants completed a selective-attention task under two conditions:
-a controlled \emph{laboratory} modality (PsychoPy) and a \emph{game-based}
-mobile modality.
-The within-subjects factor was \textbf{target load} (single vs.\ multiple
-targets); the between-subjects factor was the \textbf{modality} in which
-participants first experienced single-target trials.
-
-Phase~2, reported here, moves from description to statistical inference.
-We apply assumption-checking, parametric mixed ANOVA, robust non-parametric
-corroboration, and targeted post-hoc tests to answer the six pre-registered
+This report documents the statistical inference for our $2 \times 2$ mixed
+factorial study validating a mobile game-based modality against a
+laboratory modality under different target loads (single vs.\
+multiple). We applied mixed ANOVA, non-parametric
+methods, and post-hoc tests to evaluate our six
 hypotheses.
 
 \subsection{Research Hypotheses}
 
 \begin{description}
-  \item[H1 --- Concurrent Validity:]
-    Reaction times recorded in the lab (PsychoPy) and the game (mobile) will
-    be positively correlated across participants.
-  \item[H2 --- Load Effect:]
-    Multiple-target trials will produce longer reaction times than
-    single-target trials across both modalities (main effect of target load).
-  \item[H3 --- Modality Effect:]
-    The game interface will produce systematically longer reaction times than
-    the lab interface (main effect of modality).
-  \item[H4 --- Level Effect:]
-    Within the game modality, reaction time will increase across sequential
-    levels, indicating fatigue or rising difficulty.
-  \item[H5 --- Target Colour Effect:]
-    Red targets will be detected faster than non-red targets in the lab
-    modality (a colour salience effect).
-  \item[H6 --- Interaction Effect:]
-    The modality penalty (game~$>$~lab RT) will differ in magnitude between
-    the single-target and multiple-target conditions.
+  \item[H1 --- Concurrent Validity] \hfill \\
+    $H_0$: There is no correlation between performance on the Game and Lab task ($r = 0$). \\
+    $H_1$: Performance on the Game task is positively correlated with performance on the Lab task ($r > 0$, one-tailed).
+  \item[H2 --- Load Effect] \hfill \\
+    $H_0$: RT and accuracy do not differ between the Single Target and Multiple Target conditions ($\mu_{\text{single}} = \mu_{\text{multiple}}$). \\
+    $H_1$: The Multiple Target condition results in slower RTs and lower accuracies compared to the Single Target condition, reflecting increased attentional load ($\mu_{\text{multiple}} > \mu_{\text{single}}$ for RT; $\mu_{\text{multiple}} < \mu_{\text{single}}$ for accuracy, one-tailed).
+  \item[H3 --- Modality Effect] \hfill \\
+    $H_0$: There is no systematic difference in performance between the Lab and Game interfaces ($\mu_{\text{lab}} = \mu_{\text{game}}$). \\
+    $H_1$: Performance differs systematically between the Lab and Game interfaces ($\mu_{\text{lab}} \neq \mu_{\text{game}}$, two-tailed).
+  \item[H4 --- Level Effect] \hfill \\
+    $H_0$: Performance is stable across game levels, with no linear relationship between level and RT ($r = 0$). \\
+    $H_1$: RT changes systematically across game levels ($r \neq 0$, two-tailed).
+  \item[H5 --- Target Colour Effect] \hfill \\
+    $H_0$: Target colour has no effect on RT or accuracy ($\mu_{\text{red}} = \mu_{\text{other}}$). \\
+    $H_1$: Red targets result in faster RTs and higher accuracy compared to other colours, consistent with Feature Integration Theory \citep{treisman1980feature} ($\mu_{\text{red}} < \mu_{\text{other}}$ for RT; $\mu_{\text{red}} > \mu_{\text{other}}$ for accuracy, one-tailed).
+  \item[H6 --- Interaction Effect] \hfill \\
+    $H_0$: The magnitude of the modality penalty does not differ between target load groups. \\
+    $H_1$: The magnitude of the modality penalty differs between the single-target and multiple-target groups (two-tailed).
 \end{description}
 
-Code and data are available on
-\href{https://github.com/jewelj16/Attention-Task-Validation-Data-Analysis}{GitHub}.
+
 
 % ===========================================================================
 \section{Methods}
@@ -90,34 +78,33 @@ Code and data are available on
 
 \subsection{Participants and Design}
 
-The study used a $2 \times 2$ mixed factorial design.
-The within-subjects factor was \textbf{target load} (single, multiple);
-the between-subjects factor was \textbf{modality} (laboratory PsychoPy vs.\
-game-based mobile).
-All participants completed both target-load conditions within each modality.
-Participant counts differed slightly between conditions owing to incomplete
-game data for some individuals (single-target group: $n = 21$;
-multiple-target group: $n = 16$ after exclusions).
+$N = 37$ participants were randomly assigned to one of two Target Load
+groups. To control for practice and fatigue effects, the order of modalities
+(Lab first or Game first) was counterbalanced within each group.
+
+\begin{table}[H]
+  \centering
+  \caption{Participant Group Assignment}
+  \begin{tabular}{llcl}
+    \toprule
+    \textbf{Group} & \textbf{Condition} & \textbf{n} & \textbf{IDs} \\
+    \midrule
+    Group A & Single Target & 21 & 1--21 \\
+    Group B & Multiple Target & 16 & 22--37 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
 
 \subsection{Measures}
 
 \begin{itemize}
-  \item \textbf{Reaction Time (RT):} Mean correct-trial RT per participant
-    per condition, in seconds.  For PsychoPy trials the raw onset-to-response
-    interval was adjusted by subtracting the pre-stimulus load-screen
-    duration.  For game trials, millisecond timestamps were converted to
+  \item \textbf{Reaction Time (RT):} Reaction Time (RT) per participant, in seconds. For laboratory trials the raw onset-to-response
+For game trials, millisecond timestamps were converted to
     seconds.
   \item \textbf{Accuracy:} Proportion of trials on which the participant
-    correctly identified the target, averaged per participant per condition.
+    correctly identified the target.
 \end{itemize}
 
-\subsection{Aggregation to Participant-Level Means}
-
-All inferential analyses operate on \emph{participant-level means}
-(i.e.\ one RT and one accuracy value per participant per condition cell).
-This aggregation step avoids pseudo-replication, which would otherwise
-arise from treating each trial as an independent observation when the
-units of analysis are participants \citep{judd2012combating}.
 
 \subsection{Assumption Checks and Data Transformation}
 
@@ -129,21 +116,16 @@ To restore approximate normality a natural-log transformation was applied:
 \[
   \log\text{RT} = \ln(\text{RT}_{\text{mean}})
 \]
-Post-transformation Shapiro--Wilk tests confirmed that the log-RT
-distributions did not depart significantly from normality in any condition
-cell ($p > .05$ in all cases), justifying the use of the parametric ANOVA
-on log-transformed values.
+Post-transformation Shapiro–Wilk tests revealed that while normality was restored for the multiple target load ($p = .296$), the single target load condition still departed significantly from normality ($p = .0045$).
 
 \subsubsection{Homogeneity of Variance}
 
-Levene's test applied to log-RT across the four condition cells returned
-a non-significant result, indicating that the assumption of homogeneity of
-variance was met for the parametric tests.
+Levene’s test applied to RT across condition cells returned a significant result ($p < .001$), indicating that the assumption of homogeneity of variance was violated.
 
 \subsection{Statistical Analyses}
 
 \begin{enumerate}
-  \item \textbf{Mixed ANOVA (RT):} A $2 \times 2$ mixed ANOVA on log-RT
+  \item \textbf{Mixed ANOVA (RT):} A $2 \times 2$ mixed ANOVA on raw (untransformed) RT
     tested the main effects of target load and modality, and their
     interaction. $\eta^2_p$ is reported as the effect-size estimate.
   \item \textbf{Post-hoc paired $t$-tests:} Following a significant
@@ -152,7 +134,7 @@ variance was met for the parametric tests.
   \item \textbf{Non-parametric corroboration:}
     Mann--Whitney $U$ tests (between-subjects comparisons) and Wilcoxon
     signed-rank tests (within-subjects comparisons) were used to corroborate
-    the ANOVA findings on raw (untransformed) RT.
+    the ANOVA findings.
   \item \textbf{Accuracy tests:} Mann--Whitney $U$ and Wilcoxon signed-rank
     tests assessed load and modality effects on accuracy, given that
     proportions rarely satisfy normality assumptions.
@@ -174,9 +156,6 @@ available, providing a continuous measure of evidential strength.
 
 \subsection{Descriptive Statistics}
 
-Table~\ref{tab:descriptives} presents mean RT (seconds) and accuracy
-(proportion correct) across the four design cells.
-
 \begin{table}[H]
   \centering
   \caption{Descriptive statistics for RT and accuracy by condition.
@@ -187,29 +166,39 @@ Table~\ref{tab:descriptives} presents mean RT (seconds) and accuracy
     \textbf{Target Load} & \textbf{Modality} &
       \textbf{RT Mean (s)} & \textbf{RT SD (s)} & \textbf{Accuracy (prop.)} \\
     \midrule
-    Single   & Lab  & 1.04 & 0.32 & 0.91 \\
-    Single   & Game & 2.64 & 0.47 & 0.82 \\
-    Multiple & Lab  & 1.33 & 0.39 & 0.80 \\
-    Multiple & Game & 1.68 & 0.47 & 0.67 \\
+    Single   & Lab  & 1.495 & 0.225 & 1.000 \\
+    Single   & Game & 3.104 & 0.625 & 0.983 \\
+    Multiple & Lab  & 1.505 & 0.268 & 0.951 \\
+    Multiple & Game & 1.856 & 0.507 & 0.964 \\
     \bottomrule
   \end{tabular}
 \end{table}
 
-Inspection of Table~\ref{tab:descriptives} reveals two clear trends:
-(1) game RTs exceed lab RTs in both load conditions, and (2) multiple-target
-trials are slower than single-target trials in both modalities.
-Accuracy follows a complementary pattern, with lower accuracy for multiple
-targets and for the game modality.
+Inspection of Table~\ref{tab:descriptives} reveals that the game RTs exceed lab RTs in both load conditions.
 
-\subsection{H2 \& H3: Main Effects of Load and Modality (Mixed ANOVA)}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{{BRSM plots/download}.png}
+  \caption{Reaction time distributions (raw trial-level data) for the lab
+           (purple) and game (teal) modalities. The game distribution is
+           substantially right-skewed relative to the lab.}
+  \label{fig:rt_dist}
+\end{figure}
 
-The $2 \times 2$ mixed ANOVA on log-transformed RT yielded significant main
-effects for both factors and a significant interaction
-(Table~\ref{tab:anova}).
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{{BRSM plots/download (1)}.png}
+  \caption{Mean RT (left) and mean accuracy (right) per condition with 95\%
+           confidence intervals. Game RTs exceed lab RTs in both target-load
+           conditions; accuracy is lower for multiple targets.}
+  \label{fig:means_ci}
+\end{figure}
+
+\subsection{H2 \& H3: Main Effects of Load and Modality}
 
 \begin{table}[H]
   \centering
-  \caption{$2 \times 2$ Mixed ANOVA results for log-transformed RT.
+  \caption{$2 \times 2$ Mixed ANOVA results for RT.
            $df_1 = 1$; $df_2 = 35$ for all effects.}
   \label{tab:anova}
   \begin{tabular}{lcccc}
@@ -217,17 +206,28 @@ effects for both factors and a significant interaction
     \textbf{Source} & $\boldsymbol{F}$ & $\boldsymbol{p}$ &
       $\boldsymbol{\eta^2_p}$ & \textbf{Interpretation} \\
     \midrule
-    Target Load (H2)        & 32.23 & $< .001$ & --- & Supported \\
-    Modality (H3)           & 117.97 & $< .001$ & --- & Supported \\
-    Load $\times$ Modality (H6) & 40.34 & $< .001$ & --- & Supported \\
+    Target Load (H2)        & 32.23 & $< .001$ & 0.48 & Refuted \\
+    Modality (H3)           & 117.97 & $< .001$ & 0.77 & Supported \\
+    Load $\times$ Modality (H6) & 40.34 & $< .001$ & 0.54 & Supported \\
     \bottomrule
   \end{tabular}
 \end{table}
 
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.72\textwidth]{{BRSM plots/download (4)}.png}
+  \caption{Interaction plot for H2, H3, and H6: mean RT by target load and
+           modality with 95\% confidence intervals. Lab RT (purple) remains
+           flat across load conditions, while game RT (teal) drops sharply
+           from single to multiple targets, producing a significant
+           ordinal interaction.}
+  \label{fig:h2h3h6}
+\end{figure}
+
 \paragraph{Main effect of target load (H2).}
 $F(1, 35) = 32.23$, $p < .001$.
-Multiple-target trials were significantly slower than single-target trials,
-supporting H2.
+Multiple-target trials were significantly faster than single-target trials,
+refuting H2.
 
 \paragraph{Main effect of modality (H3).}
 $F(1, 35) = 117.97$, $p < .001$.
@@ -268,9 +268,19 @@ disproportionately slowing single-target responses.
 Under multiple-target load, both lab and game conditions require slower,
 conjunction-based search, attenuating the relative game penalty.
 
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.82\textwidth]{{BRSM plots/download (7)}.png}
+  \caption{H6: Non-linear interface penalty. Individual participant data
+           points (jittered) with group means and 95\% CI. The game penalty
+           is massive in the single-target condition (Cohen's $d = 3.42$)
+           but substantially reduced for multiple targets ($d = 0.87$).}
+  \label{fig:h6_interaction}
+\end{figure}
+
 \subsection{Non-Parametric Corroboration}
 
-To confirm that the ANOVA findings on log-RT generalise to raw (untransformed)
+To confirm that the ANOVA findings on RTs generalise to raw (untransformed)
 RT, non-parametric tests were applied to the original data.
 
 \subsubsection{Reaction Time}
@@ -309,10 +319,11 @@ underlying attentional trait shared across platforms.
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.72\textwidth]{fig4_validity_scatter.png}
-  \caption{Scatter plot of per-participant mean lab RT against mean game RT.
-           The near-horizontal regression line ($r = 0.076$) reflects the
-           absence of a significant concurrent validity relationship.}
+  \includegraphics[width=0.72\textwidth]{{BRSM plots/download (3)}.png}
+  \caption{H1: Concurrent validity scatter plot. Each point is one
+           participant's mean lab RT vs.\ mean game RT. The flat regression
+           line ($r = 0.076$, $p = .656$) confirms no significant
+           concurrent validity relationship between the two platforms.}
   \label{fig:concurrent_validity}
 \end{figure}
 
@@ -323,6 +334,16 @@ mean RT across levels was $r = 0.802$, $p < .001$.
 This strong positive correlation supports H4: reaction time increased
 steadily across sequential game levels, consistent with fatigue accumulation
 or rising task difficulty as levels progressed.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.82\textwidth]{{BRSM plots/download (5)}.png}
+  \caption{H4: Level effect in the game modality. Mean RT per level (teal
+           line with 95\% CI shading) rises across 15 game
+           levels. The dashed red regression line confirms a strong positive
+           trend ($r = 0.802$, $p < .001$).}
+  \label{fig:level_effect}
+\end{figure}
 
 \subsection{H5: Target Colour Effect}
 
@@ -335,11 +356,20 @@ Feature Integration Theory: a uniquely coloured target ``pops out'' from
 a display of differently coloured distractors, enabling faster feature
 search.
 
-% ===========================================================================
-\section{Discussion}
-% ===========================================================================
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.65\textwidth]{{BRSM plots/download (6)}.png}
+  \caption{H5: Target colour effect in the lab modality. Red targets
+           (left) produced faster RTs than other-coloured targets (right),
+           consistent with a colour pop-out (feature search) advantage
+           ($U = 395.0$, $p = .002$).}
+  \label{fig:colour_effect}
+\end{figure}
 
-\subsection{Summary of Findings}
+
+% ===========================================================================
+\section{Conclusion}
+% ===========================================================================
 
 Table~\ref{tab:summary} provides a consolidated overview of all hypothesis
 tests and their outcomes.
@@ -362,7 +392,7 @@ tests and their outcomes.
     H2: Load Effect &
       $2 \times 2$ Mixed ANOVA &
       $F(1,35) = 32.23$, $p < .001$ &
-      \textbf{Supported.}  Multiple targets slow RT. \\[4pt]
+      \textbf{Refuted.}  Multiple targets resulted in faster RTs. \\[4pt]
 
     H3: Modality Effect &
       $2 \times 2$ Mixed ANOVA &
@@ -389,91 +419,19 @@ tests and their outcomes.
   \end{tabular}
 \end{table}
 
-\subsection{Interpretation}
+This Phase~2 analysis confirms significant modality (H3) and interaction (H6)
+effects: the game interface systematically slows reaction times, particularly
+during single-target feature search. However, the load effect hypothesis (H2)
+was refuted, as multiple-target trials unexpectedly yielded faster responses.
+Non-parametric tests corroborated these findings. Furthermore, target colour
+salience (H5) and game-level fatigue (H4) significantly impacted performance,
+serving as important methodological cautions.
 
-\paragraph{Load and modality effects (H2, H3).}
-Both main effects were large and highly significant, replicating the
-well-established attentional load effect \citep{treisman1980feature} and
-confirming that the game platform imposes a consistent performance cost
-relative to the controlled lab environment.
-The latter finding is consistent with previous work showing that novel or
-gamified interfaces can introduce extraneous cognitive load
-\citep{lumsden2016gamification}.
-
-\paragraph{The interaction and its implications (H6).}
-The disproportionate game penalty for single-target trials is theoretically
-informative.
-Under Feature Integration Theory, single-target visual search is fast and
-pre-attentive in a well-practised laboratory context.
-The mobile game interface disrupts this automaticity more severely than
-it disrupts the slower, serial conjunction search required for multiple
-targets --- hence the larger effect size ($d = 3.42$ vs.\ $d = 0.87$).
-This interaction suggests that the game and lab measures are not simply
-linearly shifted versions of each other: they may capture partially
-non-overlapping cognitive processes, which is relevant to the concurrent
-validity question.
-
-\paragraph{Concurrent validity (H1).}
-The null concurrent validity finding ($r = 0.076$) is sobering.
-It implies that a participant who responds quickly in the lab does not
-necessarily respond quickly in the game, and vice versa.
-Possible explanations include large individual differences in adapting to
-the game's novel interface, floor/ceiling effects within conditions, and
-the interaction identified above (the game platform changes the cognitive
-demands of the task in a load-dependent manner).
-Future work should examine whether extended practice with the game interface
-improves concurrent validity.
-
-\paragraph{Level and colour effects (H4, H5).}
-The strong level effect ($r = 0.802$) indicates that the game design
-introduces a confound: performance changes across sequential levels in
-a way that could reflect fatigue, rising difficulty, or both.
-This confound should be controlled in future validation studies.
-The colour-salience effect (H5) replicates a well-established laboratory
-finding, providing a positive methodological validity check on the lab data.
-
-\subsection{Limitations}
-
-\begin{itemize}
-  \item \textbf{Small sample size.}
-    The effective sample differed between groups (single: $n = 21$;
-    multiple: $n = 16$), limiting statistical power and
-    generalisability.
-  \item \textbf{Incomplete game data.}
-    Participants with missing game-modality records were excluded, which
-    may have introduced selection bias.
-  \item \textbf{Order effects.}
-    The counterbalancing of modality order was not fully orthogonal, so
-    practice effects across sessions could inflate or deflate modality
-    differences.
-  \item \textbf{Game-level confound.}
-    The significant level effect (H4) means that game RT measured at later
-    levels cannot be directly compared to lab RT without accounting for
-    level number.
-\end{itemize}
-
-% ===========================================================================
-\section{Conclusion}
-% ===========================================================================
-
-This Phase~2 analysis provides strong inferential evidence for load (H2),
-modality (H3), and interaction (H6) effects on reaction time.
-The game interface systematically slows responses relative to the lab, and
-this penalty is especially pronounced for single-target (feature search)
-trials.
-Non-parametric corroboration confirms that these conclusions hold at the
-level of raw, untransformed data.
-The level effect (H4) and colour-salience effect (H5) are also supported,
-with the former representing an important methodological caution for future
-validation studies.
-
-Critically, concurrent validity (H1) was not demonstrated: lab and game
-RTs were uncorrelated across participants.
-This finding challenges the claim that the game-based tool can serve as a
-direct drop-in replacement for the laboratory measure.
-Future work should investigate whether familiarisation training, adaptive
-levelling, or structural modifications to the game interface can close the
-validity gap.
+Critically, lab and game performance were uncorrelated, failing to demonstrate
+concurrent validity (H1). This challenges the game's viability as a direct
+drop-in replacement for laboratory measures. Future research should explore
+whether familiarisation training, adaptive levelling, or interface redesigns
+can bridge this validity gap.
 
 % ===========================================================================
 \bibliographystyle{apalike}
@@ -489,12 +447,6 @@ A feature-integration theory of attention.
 Lumsden et al.\ (2016).
 Gamification of cognitive assessment and training: A systematic review of applications and efficacy.
 \textit{JMIR Serious Games}.
-
-\bibitem{judd2012combating}
-Judd, C.\ M., Westfall, J., and Kenny, D.\ A.\ (2012).
-Treating stimuli as a random factor in social psychology:
-A new and compelling case for abandoning student samples.
-\textit{Journal of Personality and Social Psychology}, 103(1), 54--69.
 
 \end{thebibliography}
 % ===========================================================================
